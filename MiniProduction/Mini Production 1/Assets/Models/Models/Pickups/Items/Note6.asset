@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99f486966bbc9e440bf79816832cfc0a, type: 3}
+  m_Name: Note6
+  m_EditorClassIdentifier: 
+  name: Note6
+  description: "Diary Entry #?? \n\nI met a person today.\n\nI haven't seen a living
+    soul in months. \n\nThey didn't see me. \n\nBut that's ok."
+  icon: {fileID: 21300000, guid: 92e03c668afb57a4f95a615c103dde74, type: 3}
+  isDefault: 0
