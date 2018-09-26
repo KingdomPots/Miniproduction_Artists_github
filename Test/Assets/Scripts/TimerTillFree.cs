@@ -26,7 +26,6 @@ public class TimerTillFree : MonoBehaviour
     private int nextTalkTime;
     private int timeTillEscape;
     private int timeTillMonsterEatsYou;
-    private int timeVeryWell;
     private int timeOtherwise;
     private int timeOtherwiseKey;
     private int timeStartFin;
@@ -36,6 +35,7 @@ public class TimerTillFree : MonoBehaviour
     private bool isDeadlineSoon;
     private bool tutorial;
     private bool endGame;
+    private bool monsterChasing;
 
     private GameObject directionalLight;
     private GameObject[] houseLights;
@@ -69,6 +69,7 @@ public class TimerTillFree : MonoBehaviour
         monsterLightColor = new Color32(255, 92, 69, 255);
 
         endGame = false;
+        monsterChasing = false;
 
         key = GameObject.FindGameObjectWithTag("PickUpKey");
         key.SetActive(false);
@@ -96,7 +97,10 @@ public class TimerTillFree : MonoBehaviour
         }
         else if (Time.time > timerMonsterHunger)
         {
-            GameManager.GameOver(false);
+            // GameManager.GameOver(false);
+            GameObject.FindGameObjectWithTag("Bob").GetComponent<LookAtPlayer>().TargetPlayer();
+            endGame = true;
+            monsterChasing = true;
         }
     }
 
@@ -121,7 +125,6 @@ public class TimerTillFree : MonoBehaviour
             tutorialWalls.gameObject.SetActive(false);
             tutorial = false;
             monsterTalking.text = "SO YOU WANT TO RESEARCH ME...";
-            timeVeryWell = timeTillMonsterEatsYou - 3;
             nextTalkTime = timeTillMonsterEatsYou - 3;
             InvokeRepeating("DecreaseTimeBy1", 1f, 1f);  //1s delay, repeat every 1s
 
@@ -150,61 +153,65 @@ public class TimerTillFree : MonoBehaviour
 
     private void DecreaseTimeBy1()
     {
-        timeTillEscape -= 1;
-        timeTillMonsterEatsYou -= 1;
+        if (!monsterChasing)
+        {
+            timeTillEscape -= 1;
+            timeTillMonsterEatsYou -= 1;
 
-        if(nextTalkTime == timeTillMonsterEatsYou && m_iCurrentText < 3)
-        {
-            Speak(m_iCurrentText);
-            m_iCurrentText += 1;
-            nextTalkTime -= 2;
-        }
+            if (nextTalkTime == timeTillMonsterEatsYou && m_iCurrentText < 3)
+            {
+                Speak(m_iCurrentText);
+                m_iCurrentText += 1;
+                nextTalkTime -= 2;
+            }
 
-        if (timeTillEscape == 0)
-        {
-            monsterTalking.text = "Take this key and LEAVE!";
-            Invoke("ClearMonsterText", 2f);
-            timeTillMonsterEatsYou = 60;
-            timer = Time.time + 60;
-            timerMonsterHunger = Time.time + 60;
-            key.SetActive(true);
-            monsterLightColor = new Color32(255, 255, 255, 255);
-            timeLeaving = timeTillMonsterEatsYou - 3;
-            isDeadlineSoon = true;
-            Light overallLight = directionalLight.GetComponent<Light>();
-            overallLight.color = new Color32(255, 224, 214, 255);
-            endGame = true;
-        }
+            if (timeTillEscape == 0)
+            {
+                monsterTalking.text = "Take this key and LEAVE!";
+                Invoke("ClearMonsterText", 2f);
+                timeTillMonsterEatsYou = 60;
+                timer = Time.time + 60;
+                timerMonsterHunger = Time.time + 60;
+                key.SetActive(true);
+                monsterLightColor = new Color32(255, 255, 255, 255);
+                timeLeaving = timeTillMonsterEatsYou - 3;
+                isDeadlineSoon = true;
+                Light overallLight = directionalLight.GetComponent<Light>();
+                overallLight.color = new Color32(255, 224, 214, 255);
+                endGame = true;
+            }
 
-        if ((20 == timeTillMonsterEatsYou || 10 == timeTillMonsterEatsYou || 5 == timeTillMonsterEatsYou) && !isDeadlineSoon)
-        {
-            Speak(timeTillMonsterEatsYou);
-        }
-        else if (timeTillMonsterEatsYou == 2 && !isDeadlineSoon)
-        {
-            monsterTalking.text = "AND THEREFORE YOU SHALL BECOME MY FOOD";
-            Invoke("ClearMonsterText", 2f);
-        }
+            if ((20 == timeTillMonsterEatsYou || 10 == timeTillMonsterEatsYou || 5 == timeTillMonsterEatsYou) && !isDeadlineSoon)
+            {
+                Speak(timeTillMonsterEatsYou);
+            }
+            else if (timeTillMonsterEatsYou == 2 && !isDeadlineSoon)
+            {
+                monsterTalking.text = "AND THEREFORE YOU SHALL BECOME MY FOOD";
+                Invoke("ClearMonsterText", 2f);
+            }
 
-        if (timeLeaving == timeTillMonsterEatsYou && isDeadlineSoon)
-        {
-            monsterTalking.text = "...UNLESS YOU WANT TO STAY";
-            Invoke("ClearMonsterText", 2f);
-        }
-        else if (10 == timeTillMonsterEatsYou && isDeadlineSoon)
-        {
-            monsterTalking.text = "OH? SOMEONE DOESNT WANT TO LEAVE?";
-            Invoke("ClearMonsterText", 2f);
-        }
-        else if (3 == timeTillMonsterEatsYou && isDeadlineSoon)
-        {
-            monsterTalking.text = "YOU WILL NEVER LEAVE AGAIN..\nM Y  F R I E N D";
-            Invoke("ClearMonsterText", 2f);
-        }
+            if (timeLeaving == timeTillMonsterEatsYou && isDeadlineSoon)
+            {
+                monsterTalking.text = "...UNLESS YOU WANT TO STAY";
+                Invoke("ClearMonsterText", 2f);
+            }
+            else if (10 == timeTillMonsterEatsYou && isDeadlineSoon)
+            {
+                monsterTalking.text = "OH? SOMEONE DOESNT WANT TO LEAVE?";
+                Invoke("ClearMonsterText", 2f);
+            }
+            else if (3 == timeTillMonsterEatsYou && isDeadlineSoon)
+            {
+                monsterTalking.text = "YOU WILL NEVER LEAVE AGAIN..\nM Y  F R I E N D";
+                Invoke("ClearMonsterText", 2f);
+            }
 
-        if (timeTillEscape == -60)
-        {
-            GameManager.GameOver(false);
+            if (timeTillEscape == -60)
+            {
+                GameManager.GameOver(false);
+                //
+            }
         }
         ChangeColor();
     }

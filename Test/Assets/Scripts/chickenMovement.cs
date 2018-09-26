@@ -15,7 +15,7 @@ public class chickenMovement : MonoBehaviour
     private TimerTillFree timer;
     private bool inBobRadius;
 
-    void Awake()
+    void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         Bob = GameObject.FindGameObjectWithTag("Bob").transform;
@@ -92,6 +92,12 @@ public class chickenMovement : MonoBehaviour
         {
             inBobRadius = false;
         }
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(this.transform.position, range);
     }
 }
 
