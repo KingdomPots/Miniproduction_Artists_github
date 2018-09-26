@@ -24,11 +24,11 @@ public class gateOpen : MonoBehaviour
                 GameObject gate = gates[i];
                 if(0 == i)
                 {
-                    gate.transform.Rotate(0f, 67.5f, 0f);
+                    gate.transform.Rotate(0f, 90, 0f);
                 }
                 else
                 {
-                    gate.transform.Rotate(0f, -67.5f, 0f);
+                    gate.transform.Rotate(0f, -90, 0f);
                 }
             }
             gateLock.gameObject.SetActive(false);
