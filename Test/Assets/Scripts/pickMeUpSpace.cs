@@ -6,7 +6,6 @@ using TMPro;
 
 public class pickMeUpSpace : MonoBehaviour
 {
-
     public TextMeshProUGUI pickMeUp;
 
     private void Start()
@@ -15,28 +14,33 @@ public class pickMeUpSpace : MonoBehaviour
             pickMeUp.enabled = false;
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.tag == "Player" && pickMeUp != null)
-        {
-            pickMeUp.enabled = true;
-        }
-    }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if(other.tag == "Player" && pickMeUp != null)
+    //    {
+    //        pickMeUp.enabled = true;
+    //    }
+    //}
 
-    private void OnTriggerExit(Collider other)
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if (other.tag == "Player" && pickMeUp != null)
+    //    {
+    //        pickMeUp.enabled = false;
+    //    }
+    //}
+
+    public void DisablePickMeup()
     {
-        if (other.tag == "Player" && pickMeUp != null)
-        {
-            pickMeUp.enabled = false;
-        }
+        pickMeUp.enabled = false;
     }
 
     //void OnDestroy()
     //{
-    //    if (pickMeUp != null)
+    //    if (pickMeUp.enabled)
     //    {
     //        pickMeUp.enabled = false;
-    //        Destroy(pickMeUp.gameObject);
+    //        //Destroy(pickMeUp.gameObject);
     //    }
     //}
 }

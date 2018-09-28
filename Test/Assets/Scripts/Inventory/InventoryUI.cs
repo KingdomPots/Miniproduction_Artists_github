@@ -29,16 +29,32 @@ public class InventoryUI : MonoBehaviour {
         {
             if(!inventoryUI.activeSelf)
             {
-                inventoryUI.SetActive(true);
-                GameManager.SetInInventory(true);
-                Debug.Log("Loading Backpack");
+                OpenInventory();
             }
             else
             {
-                inventoryUI.SetActive(false);
-                GameManager.SetInInventory(false);
-                Debug.Log("Closing Backpack");
+                CloseInventory();
             }
+        }
+    }
+
+    public void OpenInventory()
+    {
+        if(!GameManager.GetNoteOpen())
+        {
+            inventoryUI.SetActive(true);
+            GameManager.SetInInventory(true);
+            Debug.Log("Loading Backpack");
+        }
+    }
+
+    public void CloseInventory()
+    {
+        if (!GameManager.GetNoteOpen())
+        {
+            inventoryUI.SetActive(false);
+            GameManager.SetInInventory(false);
+            Debug.Log("Closing Backpack");
         }
     }
 

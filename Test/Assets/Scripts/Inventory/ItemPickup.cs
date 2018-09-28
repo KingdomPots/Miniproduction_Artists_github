@@ -1,15 +1,14 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class ItemPickup : Interactable {
+public class ItemPickup : MonoBehaviour {
 
     public Item item;
 
-    public Text pickUpPaper;
-
-    public override void Interact()
+    public void Interact()
     {
-        base.Interact();
+        //base.Interact();
+        Debug.Log("Interacting with " + transform.name);
 
         PickUp();
     }
@@ -21,18 +20,6 @@ public class ItemPickup : Interactable {
         {
             GameManager.IncreaseNotes();
             Destroy(gameObject);
-
-            if(GameObject.FindGameObjectWithTag("pickUpNote1") != null)
-                Destroy(GameObject.FindGameObjectWithTag("pickUpNote1").gameObject);
-
-        }
-    }
-
-    void OnDestroy()
-    {
-        if (pickUpPaper != null)
-        {
-            Destroy(pickUpPaper.gameObject);
         }
     }
 }

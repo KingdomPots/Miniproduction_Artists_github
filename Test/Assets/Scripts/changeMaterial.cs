@@ -14,29 +14,24 @@ public class changeMaterial : MonoBehaviour
         rend = GetComponentInChildren<Renderer>();
     }
 	
-	private void OnTriggerEnter(Collider other)
+	public void RenderHighlight()
     {
-        if(other.tag == "Player")
+        if (rend != null)
         {
-            if (rend != null)
-            {
-                rend.material = m_Material2;
-            }
-            else
-            {
-                Debug.Log("Can't render material");
-            }
+            rend.material = m_Material2;
+           // Invoke("RevertHighlight", 0.1f);
+        }
+        else
+        {
+            Debug.Log("Can't render material");
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    public void RevertHighlight()
     {
-        if (other.tag == "Player")
+        if (rend != null)
         {
-            if (rend != null)
-            {
-                rend.material = m_Material1;
-            }
+            rend.material = m_Material1;
         }
     }
 }

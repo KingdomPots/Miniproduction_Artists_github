@@ -110,106 +110,10 @@ public class PickUpScript : MonoBehaviour
     {
         if (Input.GetKeyDown("space"))
         {
-            if (!holdingSomething && null != test)
-            {
-                if(test.tag == "PickUpChicken")
-                {
-                    if (null != onCameraChicken)
-                    {
-                        holding = EPickups.ECHICKEN;
-                        
-                        onCameraChicken.SetActive(true);
-                    }
-                }
-                else if (test.tag == "PickUpBottle")
-                {
-                    if (null != onCameraBottle)
-                    {
-                        holding = EPickups.EBOTTLE;
-
-                        onCameraBottle.SetActive(true);
-                    }
-                }
-                else if (test.tag == "PickUpBanana")
-                {
-                    if (null != onCameraBanana)
-                    {
-                        holding = EPickups.EBANANA;
-
-                        onCameraBanana.SetActive(true);
-                    }
-                }
-                else if (test.tag == "PickUpEgg")
-                {
-                    if (null != onCameraEgg)
-                    {
-                        holding = EPickups.EEGG;
-
-                        onCameraEgg.SetActive(true);
-                    }
-                }
-                else if (test.tag == "PickUpSteak")
-                {
-                    if (null != onCameraSteak)
-                    {
-                        holding = EPickups.ESTEAK;
-
-                        onCameraSteak.SetActive(true);
-                    }
-                }
-                else if (test.tag == "PickUpKey")
-                {
-                    if (null != onCameraKey)
-                    {
-                        holding = EPickups.EKEY;
-
-                        onCameraKey.SetActive(true);
-                    }
-                }
-                else if (test.tag == "PickUpHam")
-                {
-                    if (null != onCameraHam)
-                    {
-                        holding = EPickups.EHAM;
-
-                        onCameraHam.SetActive(true);
-                    }
-                }
-                else if (test.tag == "PickUpSandwitch")
-                {
-                    if (null != onCameraSandwitch)
-                    {
-                        holding = EPickups.ESANDWITCH;
-
-                        onCameraSandwitch.SetActive(true);
-                    }
-                }
-                else if (test.tag == "PickUpApple")
-                {
-                    if (null != onCameraApple)
-                    {
-                        holding = EPickups.EAPPLE;
-
-                        onCameraApple.SetActive(true);
-                    }
-                }
-                else if(test.tag == "PickUpCube")
-                {
-                    if (null != onCameraCube)
-                    {
-                        holding = EPickups.ECUBE;
-                        
-                        onCameraCube.SetActive(true);
-                    }
-                }
-                test.gameObject.SetActive(false);
-                holdingSomething = true;
-            }
-            else
+            if (holdingSomething)
             {
                 if (!m_wallInfront)
                 {
-
                     switch (holding)
                     {
                         case EPickups.ECUBE:
@@ -300,7 +204,7 @@ public class PickUpScript : MonoBehaviour
                 if (holding != EPickups.ENONE)
                 {
                     test.gameObject.SetActive(true);
-                    
+
                     test.transform.position = transform.position + (transform.forward * distanceInfront);
                     test.transform.rotation = transform.rotation;
 
@@ -311,56 +215,157 @@ public class PickUpScript : MonoBehaviour
             }
         }
     }
+
+    public void HandleItemInteraction(GameObject _interactingWith)
+    {
+        if (!holdingSomething)
+        {
+            test = _interactingWith;
+            if (_interactingWith.tag == "PickUpChicken")
+            {
+                if (null != onCameraChicken)
+                {
+                    holding = EPickups.ECHICKEN;
+
+                    onCameraChicken.SetActive(true);
+                }
+            }
+            else if (_interactingWith.tag == "PickUpBottle")
+            {
+                if (null != onCameraBottle)
+                {
+                    holding = EPickups.EBOTTLE;
+
+                    onCameraBottle.SetActive(true);
+                }
+            }
+            else if (_interactingWith.tag == "PickUpBanana")
+            {
+                if (null != onCameraBanana)
+                {
+                    holding = EPickups.EBANANA;
+
+                    onCameraBanana.SetActive(true);
+                }
+            }
+            else if (_interactingWith.tag == "PickUpEgg")
+            {
+                if (null != onCameraEgg)
+                {
+                    holding = EPickups.EEGG;
+
+                    onCameraEgg.SetActive(true);
+                }
+            }
+            else if (_interactingWith.tag == "PickUpSteak")
+            {
+                if (null != onCameraSteak)
+                {
+                    holding = EPickups.ESTEAK;
+
+                    onCameraSteak.SetActive(true);
+                }
+            }
+            else if (_interactingWith.tag == "PickUpKey")
+            {
+                if (null != onCameraKey)
+                {
+                    holding = EPickups.EKEY;
+
+                    onCameraKey.SetActive(true);
+                }
+            }
+            else if (_interactingWith.tag == "PickUpHam")
+            {
+                if (null != onCameraHam)
+                {
+                    holding = EPickups.EHAM;
+
+                    onCameraHam.SetActive(true);
+                }
+            }
+            else if (_interactingWith.tag == "PickUpSandwitch")
+            {
+                if (null != onCameraSandwitch)
+                {
+                    holding = EPickups.ESANDWITCH;
+
+                    onCameraSandwitch.SetActive(true);
+                }
+            }
+            else if (_interactingWith.tag == "PickUpApple")
+            {
+                if (null != onCameraApple)
+                {
+                    holding = EPickups.EAPPLE;
+
+                    onCameraApple.SetActive(true);
+                }
+            }
+            else if (_interactingWith.tag == "PickUpCube")
+            {
+                if (null != onCameraCube)
+                {
+                    holding = EPickups.ECUBE;
+
+                    onCameraCube.SetActive(true);
+                }
+            }
+            _interactingWith.gameObject.SetActive(false);
+            holdingSomething = true;
+        }
+    }
+
     void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "TutorialWall")
+        if (other.tag == "TutorialWall")
         {
             m_wallInfront = true;
         }
 
-        if (!holdingSomething)
-        {
-            if (other.tag == "PickUpKey")
-            {
-                test = other.gameObject;
-            }
-            else if (other.tag == "PickUpCube")
-            {
-                test = other.gameObject;
-            }
-            else if (other.tag == "PickUpBottle")
-            {
-                test = other.gameObject;
-            }
-            else if (other.tag == "PickUpChicken")
-            {
-                test = other.gameObject;
-            }
-            else if (other.tag == "PickUpBanana")
-            {
-                test = other.gameObject;
-            }
-            else if (other.tag == "PickUpEgg")
-            {
-                test = other.gameObject;
-            }
-            else if (other.tag == "PickUpSteak")
-            {
-                test = other.gameObject;
-            }
-            else if (other.tag == "PickUpHam")
-            {
-                test = other.gameObject;
-            }
-            else if (other.tag == "PickUpSandwitch")
-            {
-                test = other.gameObject;
-            }
-            else if (other.tag == "PickUpApple")
-            {
-                test = other.gameObject;
-            }
-        }
+        //if (!holdingSomething)
+        //{
+        //    if (other.tag == "PickUpKey")
+        //    {
+        //        test = other.gameObject;
+        //    }
+        //    else if (other.tag == "PickUpCube")
+        //    {
+        //        test = other.gameObject;
+        //    }
+        //    else if (other.tag == "PickUpBottle")
+        //    {
+        //        test = other.gameObject;
+        //    }
+        //    else if (other.tag == "PickUpChicken")
+        //    {
+        //        test = other.gameObject;
+        //    }
+        //    else if (other.tag == "PickUpBanana")
+        //    {
+        //        test = other.gameObject;
+        //    }
+        //    else if (other.tag == "PickUpEgg")
+        //    {
+        //        test = other.gameObject;
+        //    }
+        //    else if (other.tag == "PickUpSteak")
+        //    {
+        //        test = other.gameObject;
+        //    }
+        //    else if (other.tag == "PickUpHam")
+        //    {
+        //        test = other.gameObject;
+        //    }
+        //    else if (other.tag == "PickUpSandwitch")
+        //    {
+        //        test = other.gameObject;
+        //    }
+        //    else if (other.tag == "PickUpApple")
+        //    {
+        //        test = other.gameObject;
+        //    }
+        //}
     }
 
     private void OnTriggerExit(Collider other)
@@ -370,14 +375,14 @@ public class PickUpScript : MonoBehaviour
             m_wallInfront = false;
         }
 
-        // Somehow stop players from picking up if out of range of item
-        if (!holdingSomething && null != test)
-        {
-            if (other.tag == test.tag)
-            {
-                test = null;
-            }
-        }
+        //// Somehow stop players from picking up if out of range of item
+        //if (!holdingSomething && null != test)
+        //{
+        //    if (other.tag == test.tag)
+        //    {
+        //        test = null;
+        //    }
+        //}
     }
 }
 

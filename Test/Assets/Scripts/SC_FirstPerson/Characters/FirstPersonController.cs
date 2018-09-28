@@ -74,25 +74,25 @@ namespace UnityStandardAssets.Characters.FirstPerson
             if (EventSystem.current.IsPointerOverGameObject())
                 return;
 
-            if(inRangeFocus)
-            {
-                if (Input.GetKeyDown("space"))
-                {
-                    if(focusCollided != null)
-                    {
-                        Interactable interactable = focusCollided.GetComponent<Interactable>();
-                        if (interactable != null)
-                        {
-                            SetFocus(interactable);
-                        }
-                    }
-                }
-            }
+            //if(inRangeFocus)
+            //{
+            //    if (Input.GetKeyDown("space"))
+            //    {
+            //        if(focusCollided != null)
+            //        {
+            //            Interactable interactable = focusCollided.GetComponent<Interactable>();
+            //            if (interactable != null)
+            //            {
+            //                SetFocus(interactable);
+            //            }
+            //        }
+            //    }
+            //}
 
-            if (Input.GetKeyUp("space"))
-            {
-                RemoveFocus();
-            }
+            //if (Input.GetKeyUp("space"))
+            //{
+            //    RemoveFocus();
+            //}
 
             if (!m_PreviouslyGrounded && m_CharacterController.isGrounded)
             {
